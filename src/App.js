@@ -1,23 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import logo from './logo.png';
 import './App.css';
+import axios from 'axios';
 
 function App() {
+  const [loginInfo, updateLoginInfo] = useState({ username: '', pw: ''});
+  const login = (e) => {
+    console.log(e);
+    e.preventDefault();
+    axios.post('/api/login', { port: 8080, data: loginInfo});
+  }
+  
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <h1 className="title">5nano</h1>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Login into your account
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <input 
+          placeholder="User" 
+          onChange={(e => updateLoginInfo({ username: e.target.value, pw: loginInfo.pw }))}
+          value={loginInfo.username} />
+        <input 
+          type="password"
+          placeholder="Password" onChange={(e => updateLoginInfo({ pw: e.target.value, username: loginInfo.username }))}
+          value={loginInfo.pw} />
+        <input type="submit" onClick={login} />
       </header>
     </div>
   );
