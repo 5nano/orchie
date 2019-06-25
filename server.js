@@ -1,20 +1,24 @@
 
-const React = require('react');
-const ReactDOMServer = require('react-dom/server');
-const fs = require('fs');
-const templateFn = require('./template');
+const templateDesktop = require('./templateDesktop');
+const templateMobile = require('./templateMobile');
 const express = require('express');
 const config = require('./api/config');
 const manifest = require('./dist/manifest');
-const useragent = require('express-useragent');
 const expressStaticGzip = require("express-static-gzip");
-var helmet = require('helmet')
+const helmet = require('helmet')
+const useragent = require('useragent');
+const MobileDetect = require('mobile-detect');
 
 const Api = require('./api');
 
 const app = express();
 
-app.use(helmet())
+app.use(helmet());
+app.use((req, res, next) => {
+    const mobileDetect = new MobileDetect(req.headers['user-agent']);
+    req.browser = Object.assign(mobileDetect, useragent.parse(req.headers['user-agent']));
+    next();
+});
 
 app.use('/api', Api);
 
@@ -23,8 +27,9 @@ app.use("/dist", expressStaticGzip("./dist", {
     orderPreference: ['br']
 }));
 
-app.get('/', (req, res, next) => {
-    const template = templateFn('A random project', manifest);
+app.use('/', (req, res) => {
+    const title = 'Orchie'
+    const template = req.browser.mobile() ? templateMobile(title, manifest) : templateDesktop(title);
     res.send(template);
 });
 
