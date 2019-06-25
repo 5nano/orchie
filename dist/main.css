@@ -1,0 +1,73 @@
+.App {
+  text-align: center; }
+
+input {
+  margin: 4px;
+  border-radius: 1px;
+  border-color: transparent;
+  height: 20px;
+  width: 50%; }
+
+input[type="submit"], input[type="Submit"], input[type="sUbmit"], input[type="SUbmit"], input[type="suBmit"], input[type="SuBmit"], input[type="sUBmit"], input[type="SUBmit"], input[type="subMit"], input[type="SubMit"], input[type="sUbMit"], input[type="SUbMit"], input[type="suBMit"], input[type="SuBMit"], input[type="sUBMit"], input[type="SUBMit"], input[type="submIt"], input[type="SubmIt"], input[type="sUbmIt"], input[type="SUbmIt"], input[type="suBmIt"], input[type="SuBmIt"], input[type="sUBmIt"], input[type="SUBmIt"], input[type="subMIt"], input[type="SubMIt"], input[type="sUbMIt"], input[type="SUbMIt"], input[type="suBMIt"], input[type="SuBMIt"], input[type="sUBMIt"], input[type="SUBMIt"], input[type="submiT"], input[type="SubmiT"], input[type="sUbmiT"], input[type="SUbmiT"], input[type="suBmiT"], input[type="SuBmiT"], input[type="sUBmiT"], input[type="SUBmiT"], input[type="subMiT"], input[type="SubMiT"], input[type="sUbMiT"], input[type="SUbMiT"], input[type="suBMiT"], input[type="SuBMiT"], input[type="sUBMiT"], input[type="SUBMiT"], input[type="submIT"], input[type="SubmIT"], input[type="sUbmIT"], input[type="SUbmIT"], input[type="suBmIT"], input[type="SuBmIT"], input[type="sUBmIT"], input[type="SUBmIT"], input[type="subMIT"], input[type="SubMIT"], input[type="sUbMIT"], input[type="SUbMIT"], input[type="suBMIT"], input[type="SuBMIT"], input[type="sUBMIT"], input[type="SUBMIT"] {
+  width: 25%;
+  background-color: white;
+  height: 25px; }
+
+input:focus {
+  outline: 0 solid transparent;
+  border-color: transparent;
+  box-shadow: 0 0 5px 1px rgba(231, 76, 60, 0.75); }
+
+.App-logo {
+  margin-left: 6px;
+  -webkit-animation: App-logo-spin infinite 20s linear;
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none; }
+
+.title {
+  margin: 10px 0px 40px 0px; }
+
+.App-header {
+  background-color: #3db83b;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white; }
+
+.App-link {
+  color: #61dafb; }
+
+@-webkit-keyframes App-logo-spin {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+
+@keyframes App-logo-spin {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace; }
+
