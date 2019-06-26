@@ -18,10 +18,9 @@ class Camera extends React.Component {
     }
 
     captureVideo() {
-        navigator.mediaDevices.getUserMedia({audio: false, video: true})
+        navigator.mediaDevices.getUserMedia({audio: false, video: { facingMode: { exact: "environment" } }})
             .then(gotMedia.bind(this))
             .catch(error => {
-                debugger;
                 window.alert('Permitile a Chrome acceso a tu cámara')
                 throw error;
             })
