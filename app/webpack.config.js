@@ -110,7 +110,7 @@ module.exports = {
 							loader: 'css-loader',
 							options: {
 							modules: {
-								localIdentName: devMode ? '[local]' : '[hash:base64:8]',
+								localIdentName: '[local]',
 							},
 							localsConvention: 'camelCaseOnly',
 							importLoaders: 3,

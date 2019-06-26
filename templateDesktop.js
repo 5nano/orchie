@@ -13,8 +13,6 @@ module.exports = (title) => {
     </head>
     <body>
         <h2>Accedé desde un dispositivo móvil para usar esta app</h2>
-
-        <script src="/__/firebase/6.2.3/firebase-app.js"></script>
     </body>
     </html>
 `};
