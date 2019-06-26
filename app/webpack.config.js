@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const config = require('../api/config.json');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const brotliCompress = require('iltorb').compress; // Sadly i couldnt get it to work in time
 const CompressionPlugin = require('compression-webpack-plugin');
@@ -136,7 +135,7 @@ module.exports = {
 				loader: require.resolve('url-loader'),
 				options: {
 					limit: 10000,
-					name: '/images/[name].[hash:8].[ext]',
+					name: 'images/[name].[hash:8].[ext]',
 					publicPath: '/dist'
 				},
 			},

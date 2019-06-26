@@ -2,12 +2,35 @@
 const templateDesktop = require('./templateDesktop');
 const templateMobile = require('./templateMobile');
 const express = require('express');
-const config = require('./api/config');
+const config = require('./config');
 const manifest = require('./dist/manifest');
 const expressStaticGzip = require("express-static-gzip");
 const helmet = require('helmet')
 const useragent = require('useragent');
 const MobileDetect = require('mobile-detect');
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
+var firebase = require("firebase");
+
+// Add the Firebase products that you want to use
+require("firebase/auth");
+require("firebase/database");
+
+firebase.initializeApp({
+    apiKey: "AIzaSyBLbSF0bTZ4dA8kKEKybENZxWZuMWPfzE4",
+    authDomain: "proyecto-final-utn-frba.firebaseapp.com",
+    databaseURL: "https://proyecto-final-utn-frba.firebaseio.com",
+    projectId: "proyecto-final-utn-frba",
+    storageBucket: "",
+    messagingSenderId: "699033970836",
+    appId: "1:699033970836:web:f97c03cf9f16c463"
+})
+
+const privateKey  = fs.readFileSync('cert/selfsigned.key', 'utf8');
+const certificate = fs.readFileSync('cert/selfsigned.crt', 'utf8');
+
+const credentials = {key: privateKey, cert: certificate};
 
 const Api = require('./api');
 
@@ -33,6 +56,13 @@ app.use('/', (req, res) => {
     res.send(template);
 });
 
-app.listen(config.port, () => console.log(`API running on port ${config.port}`));
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(config.port.http);
+httpsServer.listen(config.port.https);
+
+console.log(`http serving on ${config.port.http}\n`);
+console.log(`https serving on ${config.port.https}\n`)
 
 module.exports = app;

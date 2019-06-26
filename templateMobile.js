@@ -26,6 +26,8 @@ module.exports = (title, manifest) => {
                 .map(asset => `<script type="text/javascript" src="dist/${manifest[asset]}"></script>`)
                 .join(' ')
         }
+
+        <script src="/__/firebase/6.2.3/firebase-app.js"></script>
     </body>
     </html>
 `};

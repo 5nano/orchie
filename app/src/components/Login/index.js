@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import logo from './logo.png';
-import './styles.scss';
+import './Login.scss';
 import axios from 'axios';
 
 function Login(props) {
@@ -12,12 +12,11 @@ function Login(props) {
       .then(() => {
         props.login(loginInfo);
         
-        props.history.replace('/');
+        props.history.replace('/steps-print-plane');
       })
       .catch(console.log)
   }
   
-  console.log(props)
   return (
     <div className="Login">
     <header className="Login-header">
