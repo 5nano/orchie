@@ -5,7 +5,7 @@
   "main": "index.js",
   "browserslist": "defaults",
   "scripts": {
-    "dist": "NODE_ENV=production webpack --config app/webpack.config.js",
+    "dist": "NODE_ENV=production ./node_modules/webpack/bin/webpack.js --config app/webpack.config.js",
     "build": "NODE_ENV=development webpack --config app/webpack.config.js",
     "watch": "NODE_ENV=development webpack --watch --config app/webpack.config.js",
     "analyze": "npm run dist --analyze",
