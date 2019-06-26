@@ -17,10 +17,10 @@ function App() {
   
   return (
     <Router>
-      {/* {
+      {
         !state.loginInfo && 
         <Redirect from="/" to="/login" />
-      } */}
+      }
 
       <Route 
         path="/steps-print-plane" 
