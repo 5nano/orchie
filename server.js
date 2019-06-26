@@ -60,7 +60,7 @@ var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(config.port.http);
-httpsServer.listen(config.port.https);
+httpsServer.listen(process.env.PORT || config.port.https); // process.env.PORT is provided by heroku
 
 console.log(`http serving on ${config.port.http}\n`);
 console.log(`https serving on ${config.port.https}\n`)
