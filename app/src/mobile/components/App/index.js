@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Login from '../Login';
 import PrintInstructions from '../PrintInstructions';
 import PictureInstructions from '../PictureInstructions';
-import Camera from '../Camera';
+import QRScan from '../QRScan';
 import './App.scss';
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
@@ -32,6 +32,13 @@ function App() {
         path="/steps-use-plane" 
         exact 
         render={(props) => (<PictureInstructions {...props} />)}
+      />
+
+
+      <Route 
+        path="/qr-scan" 
+        exact 
+        render={(props) => (<QRScan {...props} />)}
       />
 
       <Route 

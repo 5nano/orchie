@@ -15,10 +15,10 @@ function App() {
   
   return (
     <Router>
-      {/* {
+      {
         !state.loginInfo && 
         <Redirect from="/" to="/login" />
-      } */}
+      }
 
       <Route 
         path="/create-qr" 

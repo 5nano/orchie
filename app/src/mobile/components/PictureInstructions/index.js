@@ -6,7 +6,7 @@ import axios from 'axios';
 function PictureInstructions(props) {
     const handleClick = (e) => {
         e.preventDefault();
-        props.history.push('/camera');
+        props.history.push('/qr-scan');
     }
 
   return (
