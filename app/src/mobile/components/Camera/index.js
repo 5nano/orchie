@@ -89,7 +89,7 @@ class Camera extends React.Component {
     
         return (
             <div className="PictureInstructions Camera">
-                <h1>Sacá la foto de {this.props.experimentName}</h1>
+                <h1>Sacá la foto de {this.props.currentExperiment}</h1>
         
                 {
                     !this.state.tookPicture &&
