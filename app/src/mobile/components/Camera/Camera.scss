@@ -1,5 +1,4 @@
 .Camera {
-
     .loading {
         color: white;
         margin: auto;
@@ -7,7 +6,7 @@
     }
 
     button {
-        margin-top: 80px;
+        margin-top: 20px;
     }
     .photo {
         width: 100%;
@@ -15,7 +14,9 @@
     }
 
     .live-camera {
-        width: 100%;
-        margin-top: 80px
+        object-fit: contain;
+        width: 70%;
+        margin: auto;
+        display: block;
     }
 }

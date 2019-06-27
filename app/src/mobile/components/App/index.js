@@ -8,10 +8,11 @@ import './App.scss';
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
 function App() {
-  const [state, setState] = useState({ loginInfo: null });
+  const [state, setState] = useState({ loginInfo: null, experimentName: '' });
 
   const login = (loginData) => {
     setState({
+      ...state,
       loginInfo: loginData
     })
   }

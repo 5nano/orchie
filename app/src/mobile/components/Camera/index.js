@@ -77,6 +77,7 @@ class Camera extends React.Component {
     }
 
     render() {
+        console.log(this.props);
         if (this.state.sent) {
             return (
                 <div className="PictureInstructions Camera">
