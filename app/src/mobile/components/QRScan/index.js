@@ -31,7 +31,7 @@ class Camera extends React.Component {
     render() {
     
         return (
-            <div className="PictureInstructions Camera">
+            <div className="PictureInstructions Camera QR">
                 <h1>Escanea el QR de la muestra</h1>
         
                 <QrReader

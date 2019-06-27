@@ -88,7 +88,7 @@ class Camera extends React.Component {
         }
     
         return (
-            <div className="PictureInstructions Camera">
+            <div className="PictureInstructions Camera Plant">
                 <h1>Sacá la foto de {this.props.currentExperiment}</h1>
         
                 {
