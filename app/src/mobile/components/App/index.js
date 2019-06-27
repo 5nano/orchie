@@ -14,6 +14,13 @@ function App() {
       loginInfo: loginData
     })
   }
+
+  const setCurrentExperiment = (experimentName) => {
+    setState({
+      ...state,
+      experimentName
+    })
+  }
   
   return (
     <Router>
@@ -38,13 +45,13 @@ function App() {
       <Route 
         path="/qr-scan" 
         exact 
-        render={(props) => (<QRScan {...props} />)}
+        render={(props) => (<QRScan {...props} setCurrentExperiment={setCurrentExperiment} />)}
       />
 
       <Route 
         path="/camera" 
         exact 
-        render={(props) => (<Camera {...props} />)}
+        render={(props) => (<Camera {...props} currentExperiment={state.experimentName} />)}
       />
 
       <Route 
