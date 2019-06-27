@@ -26,7 +26,10 @@ const devMode = NODE_ENV === 'development';
 
 module.exports = {
 	mode: NODE_ENV,
-	entry: './src/index.js',
+	entry: { 
+		'main.mobile': './src/mobile/index.js',
+		'main.desktop': './src/desktop/index.js'
+	},
 	context: path.resolve(__dirname),
 
 	output: {

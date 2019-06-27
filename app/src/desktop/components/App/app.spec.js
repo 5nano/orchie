@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import mockAxios from 'axios';
 import React from 'react';
-import App from './index.js';
+import App from './index.js.js';
 
 jest.mock('axios');
 

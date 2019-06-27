@@ -52,7 +52,7 @@ app.use("/dist", expressStaticGzip("./dist", {
 
 app.use('/', (req, res) => {
     const title = 'Orchie'
-    const template = req.browser.mobile() ? templateMobile(title, manifest) : templateDesktop(title);
+    const template = req.browser.mobile() ? templateMobile(title, manifest) : templateDesktop(title, manifest);
     res.send(template);
 });
 

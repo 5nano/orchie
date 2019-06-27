@@ -13,7 +13,7 @@ module.exports = (title, manifest) => {
         
         ${
             Object.keys(manifest)
-                .filter(asset => manifest[asset].endsWith('.css'))
+                .filter(asset => manifest[asset].endsWith('.css') && asset.includes('mobile'))
                 .map(asset => `<link href="dist/${manifest[asset]}" rel="stylesheet">`)
                 .join(' ')
         }
@@ -22,7 +22,7 @@ module.exports = (title, manifest) => {
         <div id="app-root"></div>
         ${
             Object.keys(manifest)
-                .filter(asset => manifest[asset].endsWith('.js'))
+                .filter(asset => manifest[asset].endsWith('.js') && asset.includes('mobile'))
                 .map(asset => `<script type="text/javascript" src="dist/${manifest[asset]}"></script>`)
                 .join(' ')
         }
