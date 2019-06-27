@@ -5,7 +5,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const {
@@ -41,11 +40,6 @@ module.exports = {
 		new webpack.ProgressPlugin(), 
 		new CleanWebpackPlugin(),
 		new ManifestPlugin(),
-		new HtmlWebpackPlugin({
-			title: 'random-project',
-			appMountId: 'app-root',
-			template: './src/index.html'
-		}),
 		new MiniCssExtractPlugin({
 			filename: devMode ? '[name].css' : '[name].[hash].css',
 			chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
