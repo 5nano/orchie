@@ -41,10 +41,7 @@ class Camera extends React.Component {
                     style={{ width: '100%' }}
                 />         
         
-            {
-                this.state.result &&
-                <p>{this.state.result}</p>
-            }
+            <p>Si la muestra aún no tiene QR dirigite a la app de escritorio e imprimila</p>
             </div>
         );
     }
