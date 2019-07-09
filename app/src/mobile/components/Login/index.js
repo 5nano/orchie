@@ -13,7 +13,7 @@ function Login(props) {
         props.login(loginInfo);
         
        //props.history.replace('/steps-print-plane');
-       props.history.replace('image-router');
+       props.history.replace('/camera');
       })
       .catch(console.log)
   }

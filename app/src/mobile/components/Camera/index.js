@@ -9,6 +9,7 @@ class Camera extends React.Component {
             tookPicture: false,
             loading: false,
             sent: false,
+            photoInfo: null,
         };
         this.takePicture = this.takePicture.bind(this);
         this.resetCamera = this.resetCamera.bind(this);
@@ -45,11 +46,45 @@ class Camera extends React.Component {
                 this.setState({
                     tookPicture: true,
                 }, () => {
+                    console.log(blob)
                     this.refs.camera.src = URL.createObjectURL(blob);
                     this.refs.camera.onload = () => { URL.revokeObjectURL(this.src); }
+                    this.imageToBase64(blob);
                 })
             })
     }
+
+    imageToBase64(file){
+        let reader = new FileReader()
+        
+        reader.readAsDataURL(file)
+        
+        reader.onload = () => {
+            let photoInfo = {
+                name: file.name,
+                type: file.type,
+                size: Math.round(file.size / 1000) + 'kB',
+                base64: reader.result,
+                file:file,
+            };
+        
+        this.setState({ photoInfo: photoInfo }) 
+        console.log(photoInfo)
+        }
+    }
+
+    fileUploadHandler(){
+        axios({
+          method: 'post',
+          url: 'localhost:8090/bulmapsaur/api/images',
+          data: {
+            name: this.state.photoInfo.name,
+            size: this.state.photoInfo.size,
+            base64: this.state.photoInfo.base64,
+            file: this.state.photoInfo.file,
+          }
+        });
+      }
 
     resetCamera() {
         this.setState({
@@ -69,6 +104,7 @@ class Camera extends React.Component {
                     sent: true,
                 })
             }, 1400)
+            this.fileUploadHandler();
         })
     }
 
