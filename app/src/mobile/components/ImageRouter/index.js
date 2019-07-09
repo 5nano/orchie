@@ -6,11 +6,11 @@ class ImageRouter extends React.Component{
         super()
         this.state = {
             files:[],
-            selectedFile: null
+            fileInfo: null
         };
 
         this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
-        this.getFiles = this.getFiles.bind(this);
+        this.imageToBase64 = this.imageToBase64.bind(this);
     }
 
     //Callback
@@ -19,9 +19,26 @@ class ImageRouter extends React.Component{
     }
 
     fileSelectedHandler(event) {
-        this.setState({
-         selectedFile: event.target.files[0]
-        })
+        this.imageToBase64(event.target.files[0])
+    }
+
+    imageToBase64(file){
+        let reader = new FileReader();
+        
+        reader.readAsDataURL(file);
+        
+        reader.onload = () => {
+            let fileInfo = {
+                name: file.name,
+                type: file.type,
+                size: Math.round(file.size / 1000) + 'kB',
+                base64: reader.result,
+                file:file,
+            };
+        
+        this.setState({ fileInfo: fileInfo }) ;
+        
+        }
     }
 
     fileUploadHandler(){
@@ -39,22 +56,20 @@ class ImageRouter extends React.Component{
             <div>
 
         <div className="text-center mt-25">
-          <FileBase64
-            multiple={ true }
-            onDone={ this.getFiles.bind(this) } />
+         <input type="file" onChange= {this.fileSelectedHandler} />
         </div>
 
 
-        { this.state.files.length != 0 ?
+        { this.state.fileInfo ?
           <div>
             <h3 className="text-center mt-25">Callback Object</h3>
             <div className="pre-container">
-              <pre>{ JSON.stringify(this.state.files, null, 2) }</pre>
+              <pre>{ JSON.stringify(this.state.fileInfo, null, 2) }</pre>
             </div>
           </div>
         : null }
 
-        <button onClick={this.fileUploadHandler}>Upload</button>
+        
 
       </div>
 
