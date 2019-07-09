@@ -25,9 +25,13 @@ class ImageRouter extends React.Component{
     }
 
     fileUploadHandler(){
-        
-        //Aca va el post al endpoint
-        //axios.post('');
+      axios({
+        method: 'post',
+        url: 'localhost:8090/bulmapsaur/api/images',
+        data: {
+          name: this.files
+        }
+      });
     }
 
     render (){
