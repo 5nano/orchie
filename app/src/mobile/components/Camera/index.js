@@ -8,7 +8,7 @@ class Camera extends React.Component {
         this.state = {
             tookPicture: false,
             loading: false,
-            sent: false,
+            sent: false
         };
         this.takePicture = this.takePicture.bind(this);
         this.resetCamera = this.resetCamera.bind(this);
@@ -43,7 +43,7 @@ class Camera extends React.Component {
         this.imageCapture.takePhoto()
             .then((blob) => {
                 this.setState({
-                    tookPicture: true,
+                    tookPicture: true
                 }, () => {
                     this.refs.camera.src = URL.createObjectURL(blob);
                     this.refs.camera.onload = () => { URL.revokeObjectURL(this.src); }
@@ -63,14 +63,27 @@ class Camera extends React.Component {
         this.setState({
             loading: true,
         }, () => {
-            setTimeout(() => {
-                this.setState({
-                    loading: false,
-                    sent: true,
-                })
-            }, 1400)
-        })
+            window.alert("enviando")
+            axios({
+                method: 'post',
+                baseURL: 'https://192.168.0.39:8443/bulmapsaur/api',
+                url: '/images',
+                headers:{
+                'Content-Type': 'application/json; charset=utf-8',
+                'Accept': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+                },
+                data: {
+                    name:'lucas'
+                }
+              }).then(function(response){console.log(response)})
+                .catch(function(error){console.log(error)})
+                .then(function(){this.setState({
+                                 loading: false,
+                                 sent: true})})
+   
     }
+    )}
 
     nextPlant() {
         this.props.history.replace('/steps-use-plane')
@@ -112,7 +125,7 @@ class Camera extends React.Component {
                         !this.state.tookPicture ? 
                         <button onClick={this.takePicture}> Sacar Foto </button> : 
                         [
-                            <button onClick={this.sendPicture}> Enviar Foto </button>,
+                            <button onClick={this.sendPicture}>Enviar Foto </button>,
                             <button onClick={this.resetCamera}> Volver a Sacar </button>
                         ]
     
