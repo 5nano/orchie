@@ -46,7 +46,6 @@ class Camera extends React.Component {
                 this.setState({
                     tookPicture: true,
                 }, () => {
-                    console.log(blob)
                     this.refs.camera.src = URL.createObjectURL(blob);
                     this.refs.camera.onload = () => { URL.revokeObjectURL(this.src); }
                     this.imageToBase64(blob);
@@ -63,7 +62,7 @@ class Camera extends React.Component {
             let photoInfo = {
                 name: file.name,
                 type: file.type,
-                size: Math.round(file.size / 1000) + 'kB',
+                size: file.size,
                 base64: reader.result,
                 file:file,
             };
