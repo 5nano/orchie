@@ -48,12 +48,12 @@ class Camera extends React.Component {
                 }, () => {
                     this.refs.camera.src = URL.createObjectURL(blob);
                     this.refs.camera.onload = () => { URL.revokeObjectURL(this.src); }
-                    this.imageToBase64(blob);
+                    this.handleImageToBase64(blob);
                 })
             })
     }
 
-    imageToBase64(file){
+    handleImageToBase64(file){
         let reader = new FileReader()
         
         reader.readAsDataURL(file)
@@ -72,18 +72,32 @@ class Camera extends React.Component {
         }
     }
 
-    fileUploadHandler(){
-        axios({
-          method: 'post',
-          url: 'localhost:8090/bulmapsaur/api/images',
-          data: {
-            name: this.state.photoInfo.name,
-            size: this.state.photoInfo.size,
-            base64: this.state.photoInfo.base64,
-            file: this.state.photoInfo.file,
-          }
-        });
+    handleFileUpload(){
+     
+        setTimeout(() => {
+            this.setState({
+                loading: false,
+                sent: true,
+            })
+        }, 1400)
+
+        fetch('https://my-json-server.typicode.com/typicode/demo/posts', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: this.state.photoInfo.name,
+                size: this.state.photoInfo.size,
+                base64: this.state.photoInfo.base64,
+                file: this.state.photoInfo.file,
+            })
+            })
+        .then(response => console.log(response))
+
       }
+
 
     resetCamera() {
         this.setState({
@@ -96,15 +110,8 @@ class Camera extends React.Component {
     sendPicture() {
         this.setState({
             loading: true,
-        }, () => {
-            setTimeout(() => {
-                this.setState({
-                    loading: false,
-                    sent: true,
-                })
-            }, 1400)
-            this.fileUploadHandler();
-        })
+            },
+            this.handleFileUpload)
     }
 
     nextPlant() {
@@ -112,7 +119,7 @@ class Camera extends React.Component {
     }
 
     render() {
-        console.log(this.props);
+      
         if (this.state.sent) {
             return (
                 <div className="PictureInstructions Camera">
