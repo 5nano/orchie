@@ -4,6 +4,7 @@ import PrintInstructions from '../PrintInstructions';
 import PictureInstructions from '../PictureInstructions';
 import Camera from '../Camera';
 import QRScan from '../QRScan';
+import ImageRouter from '../ImageRouter';
 import './App.scss';
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
@@ -54,6 +55,12 @@ function App() {
         path="/camera" 
         exact 
         render={(props) => (<Camera {...props} currentExperiment={state.experimentName} />)}
+      />
+
+      <Route
+        path="/image-router"
+        exact
+        render={(props) => (<ImageRouter />)}
       />
 
       <Route 

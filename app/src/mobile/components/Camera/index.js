@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import './Camera.scss';
 
 class Camera extends React.Component {
@@ -8,7 +7,8 @@ class Camera extends React.Component {
         this.state = {
             tookPicture: false,
             loading: false,
-            sent: false
+            sent: false,
+            photoInfo: null,
         };
         this.takePicture = this.takePicture.bind(this);
         this.resetCamera = this.resetCamera.bind(this);
@@ -47,9 +47,56 @@ class Camera extends React.Component {
                 }, () => {
                     this.refs.camera.src = URL.createObjectURL(blob);
                     this.refs.camera.onload = () => { URL.revokeObjectURL(this.src); }
+                    this.handleImageToBase64(blob);
                 })
             })
     }
+
+    handleImageToBase64(file){
+        let reader = new FileReader()
+        
+        reader.readAsDataURL(file)
+        
+        reader.onload = () => {
+            let photoInfo = {
+                name: file.name,
+                type: file.type,
+                size: file.size,
+                base64: reader.result,
+                file:file,
+            };
+        
+        this.setState({ photoInfo: photoInfo }) 
+        console.log(photoInfo)
+        }
+    }
+
+    handleFileUpload(){
+     
+        setTimeout(() => {
+            this.setState({
+                loading: false,
+                sent: true,
+            })
+        }, 1400)
+
+        fetch('https://my-json-server.typicode.com/typicode/demo/posts', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: this.state.photoInfo.name,
+                size: this.state.photoInfo.size,
+                base64: this.state.photoInfo.base64,
+                file: this.state.photoInfo.file,
+            })
+            })
+        .then(response => console.log(response))
+
+      }
+
 
     resetCamera() {
         this.setState({
@@ -62,26 +109,8 @@ class Camera extends React.Component {
     sendPicture() {
         this.setState({
             loading: true,
-        }, () => {
-            window.alert("enviando")
-            axios({
-                method: 'post',
-                baseURL: 'https://192.168.0.39:8443/bulmapsaur/api',
-                url: '/images',
-                headers:{
-                'Content-Type': 'application/json; charset=utf-8',
-                'Accept': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-                },
-                data: {
-                    name:'lucas'
-                }
-              }).then(function(response){console.log(response)})
-                .catch(function(error){console.log(error)})
-                .then(function(){this.setState({
-                                 loading: false,
-                                 sent: true})})
-   
+            },
+            this.handleFileUpload)
     }
     )}
 
@@ -90,7 +119,7 @@ class Camera extends React.Component {
     }
 
     render() {
-        console.log(this.props);
+      
         if (this.state.sent) {
             return (
                 <div className="PictureInstructions Camera">
