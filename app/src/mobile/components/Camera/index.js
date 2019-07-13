@@ -94,6 +94,7 @@ class Camera extends React.Component {
             })
             })
         .then(response => console.log(response))
+        .catch(error => console.log(error))
 
       }
 
@@ -111,8 +112,7 @@ class Camera extends React.Component {
             loading: true,
             },
             this.handleFileUpload)
-    }
-    )}
+    }  
 
     nextPlant() {
         this.props.history.replace('/steps-use-plane')
