@@ -52,14 +52,14 @@ class Camera extends React.Component {
             })
     }
 
-    handleImageToBase64(file){
+    handleImageToBase64(file) {
         let reader = new FileReader()
         
         reader.readAsDataURL(file)
         
         reader.onload = () => {
             let photoInfo = {
-                name: file.name,
+                name: "cambiar esto",
                 type: file.type,
                 size: file.size,
                 base64: reader.result,
@@ -79,23 +79,27 @@ class Camera extends React.Component {
                 sent: true,
             })
         }, 1400)
-
-        fetch('https://my-json-server.typicode.com/typicode/demo/posts', {
+        fetch('https://192.168.0.39:8443/bulmapsaur/api/images', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                name: this.state.photoInfo.name,
-                size: this.state.photoInfo.size,
-                base64: this.state.photoInfo.base64,
-                file: this.state.photoInfo.file,
-            })
+            body: this.buildBody()
             })
         .then(response => console.log(response))
-
+        .catch(error => console.log(error))
       }
+
+      buildBody () {
+        let base64WithExtraInfo = this.state.photoInfo.base64; 
+        return JSON.stringify({
+             name: this.state.photoInfo.name,
+             size: this.state.photoInfo.size,
+             base64: base64WithExtraInfo.slice(base64WithExtraInfo.indexOf(",")+1),
+             file: this.state.photoInfo.file,
+         })
+     }  
 
 
     resetCamera() {
@@ -112,7 +116,7 @@ class Camera extends React.Component {
             },
             this.handleFileUpload)
     }
-    )}
+    
 
     nextPlant() {
         this.props.history.replace('/steps-use-plane')
