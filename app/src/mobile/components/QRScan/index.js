@@ -17,7 +17,8 @@ class Camera extends React.Component {
 
     handleScan(data) {
         if (data) {
-            this.props.setCurrentExperiment(data);
+            console.log(data)
+            this.props.setCurrentExperiment(1,'Fertilizante para soja',2);
             this.props.history.replace('/camera')
         }
     }

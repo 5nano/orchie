@@ -9,16 +9,18 @@ class Camera extends React.Component {
             loading: false,
             sent: false,
             photoInfo: null,
-        };
+        }
         this.takePicture = this.takePicture.bind(this);
         this.resetCamera = this.resetCamera.bind(this);
         this.captureVideo = this.captureVideo.bind(this);
         this.sendPicture = this.sendPicture.bind(this);
         this.nextPlant = this.nextPlant.bind(this);
     }
+    
 
     captureVideo() {
-        navigator.mediaDevices.getUserMedia({audio: false, video: { facingMode: { exact: "environment" } }})
+       
+        navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:"environment"}})
             .then(gotMedia.bind(this))
             .catch(error => {
                 window.alert('Permitile a Chrome acceso a tu cámara')
@@ -35,6 +37,7 @@ class Camera extends React.Component {
             this.imageCapture = new ImageCapture(mediaStreamTrack);
         }
     }
+
     componentDidMount() {
         this.captureVideo();
     }
@@ -132,12 +135,16 @@ class Camera extends React.Component {
                 </div>
             )
         }
-    
+        console.log(this.state)
         return (
+            
             <div className="PictureInstructions Camera Plant">
                 {
                     !this.state.tookPicture ?
-                    <h1>Sacá la foto de "{this.props.currentExperiment}"</h1> :
+                    <h1>
+                        Sacá la foto de "{this.props.currentExperiment.experimentName}"
+                        de la muestra "{this.props.currentExperiment.testId}"
+                    </h1> :
                     <h1>Se ve bien la foto?</h1>
                 }
                 

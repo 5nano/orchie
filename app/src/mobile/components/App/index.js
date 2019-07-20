@@ -9,7 +9,12 @@ import './App.scss';
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
 function App() {
-  const [state, setState] = useState({ loginInfo: null, experimentName: '' });
+  const [state, setState] = useState({ 
+    loginInfo: null, 
+    experiment: {experimentId: null, 
+                 experimentName: '',
+                 testId: null}
+  });
 
   const login = (loginData) => {
     setState({
@@ -18,10 +23,10 @@ function App() {
     })
   }
 
-  const setCurrentExperiment = (experimentName) => {
+  const setCurrentExperiment = (experimentId, experimentName, testId) => {
     setState({
       ...state,
-      experimentName
+      experiment: {experimentId,experimentName,testId}
     })
   }
   
@@ -54,13 +59,7 @@ function App() {
       <Route 
         path="/camera" 
         exact 
-        render={(props) => (<Camera {...props} currentExperiment={state.experimentName} />)}
-      />
-
-      <Route
-        path="/image-router"
-        exact
-        render={(props) => (<ImageRouter />)}
+        render={(props) => (<Camera {...props} currentExperiment = {state.experiment} />)}
       />
 
       <Route 
