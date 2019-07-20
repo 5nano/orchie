@@ -62,7 +62,9 @@ class Camera extends React.Component {
         
         reader.onload = () => {
             let photoInfo = {
-                name: "cambiar esto",
+                experimentName: this.props.currentExperiment.experimentName,
+                experimentId: this.props.currentExperiment.experimentId,
+                testId: this.props.currentExperiment.testId,
                 type: file.type,
                 size: file.size,
                 base64: reader.result,
