@@ -17,7 +17,8 @@ class Camera extends React.Component {
 
     handleScan(data) {
         if (data) {
-            this.props.setCurrentExperiment(data);
+            console.log(data)
+            this.props.setCurrentExperiment(1,'Fertilizante para soja',2);
             this.props.history.replace('/camera')
         }
     }
@@ -31,17 +32,15 @@ class Camera extends React.Component {
     render() {
     
         return (
-            <div className="PictureInstructions Camera QR">
+            <div className="PictureInstructions ">
                 <h1>Escanea el QR de la muestra</h1>
-        
-                <QrReader
+                {<QrReader
                     delay={300}
                     onError={this.handleError}
                     onScan={this.handleScan}
                     style={{ width: '100%' }}
-                />         
-        
-            <p>Si la muestra aún no tiene QR dirigite a la app de escritorio e imprimila</p>
+                />}        
+             <p>Si la muestra aún no tiene QR dirigite a la app de escritorio e imprimila</p>
             </div>
         );
     }

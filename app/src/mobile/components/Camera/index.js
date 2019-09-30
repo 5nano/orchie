@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import './Camera.scss';
 
 class Camera extends React.Component {
@@ -9,16 +8,19 @@ class Camera extends React.Component {
             tookPicture: false,
             loading: false,
             sent: false,
-        };
+            photoInfo: null,
+        }
         this.takePicture = this.takePicture.bind(this);
         this.resetCamera = this.resetCamera.bind(this);
         this.captureVideo = this.captureVideo.bind(this);
         this.sendPicture = this.sendPicture.bind(this);
         this.nextPlant = this.nextPlant.bind(this);
     }
+    
 
     captureVideo() {
-        navigator.mediaDevices.getUserMedia({audio: false, video: { facingMode: { exact: "environment" } }})
+       
+        navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:"environment"}})
             .then(gotMedia.bind(this))
             .catch(error => {
                 window.alert('Permitile a Chrome acceso a tu cámara')
@@ -35,6 +37,7 @@ class Camera extends React.Component {
             this.imageCapture = new ImageCapture(mediaStreamTrack);
         }
     }
+
     componentDidMount() {
         this.captureVideo();
     }
@@ -43,13 +46,66 @@ class Camera extends React.Component {
         this.imageCapture.takePhoto()
             .then((blob) => {
                 this.setState({
-                    tookPicture: true,
+                    tookPicture: true
                 }, () => {
                     this.refs.camera.src = URL.createObjectURL(blob);
                     this.refs.camera.onload = () => { URL.revokeObjectURL(this.src); }
+                    this.handleImageToBase64(blob);
                 })
             })
     }
+
+    handleImageToBase64(file) {
+        let reader = new FileReader()
+        
+        reader.readAsDataURL(file)
+        
+        reader.onload = () => {
+            let photoInfo = {
+                experimentName: this.props.currentExperiment.experimentName,
+                experimentId: this.props.currentExperiment.experimentId,
+                testId: this.props.currentExperiment.testId,
+                type: file.type,
+                size: file.size,
+                base64: reader.result,
+                file:file,
+            };
+        
+        this.setState({ photoInfo: photoInfo }) 
+        console.log(photoInfo)
+        }
+    }
+
+    handleFileUpload(){
+     
+        setTimeout(() => {
+            this.setState({
+                loading: false,
+                sent: true,
+            })
+        }, 1400)
+        fetch('https://192.168.0.39:8443/bulmapsaur/api/images', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: this.buildBody()
+            })
+        .then(response => console.log(response))
+        .catch(error => console.log(error))
+      }
+
+      buildBody () {
+        let base64WithExtraInfo = this.state.photoInfo.base64; 
+        return JSON.stringify({
+             name: this.state.photoInfo.name,
+             size: this.state.photoInfo.size,
+             base64: base64WithExtraInfo.slice(base64WithExtraInfo.indexOf(",")+1),
+             file: this.state.photoInfo.file,
+         })
+     }  
+
 
     resetCamera() {
         this.setState({
@@ -62,22 +118,17 @@ class Camera extends React.Component {
     sendPicture() {
         this.setState({
             loading: true,
-        }, () => {
-            setTimeout(() => {
-                this.setState({
-                    loading: false,
-                    sent: true,
-                })
-            }, 1400)
-        })
+            },
+            this.handleFileUpload)
     }
+    
 
     nextPlant() {
         this.props.history.replace('/steps-use-plane')
     }
 
     render() {
-        console.log(this.props);
+      
         if (this.state.sent) {
             return (
                 <div className="PictureInstructions Camera Success">
@@ -86,12 +137,16 @@ class Camera extends React.Component {
                 </div>
             )
         }
-    
+        console.log(this.state)
         return (
+            
             <div className="PictureInstructions Camera Plant">
                 {
                     !this.state.tookPicture ?
-                    <h1>Sacá la foto de "{this.props.currentExperiment}"</h1> :
+                    <h1>
+                        Sacá la foto de "{this.props.currentExperiment.experimentName}"
+                        de la muestra "{this.props.currentExperiment.testId}"
+                    </h1> :
                     <h1>Se ve bien la foto?</h1>
                 }
                 
@@ -112,7 +167,7 @@ class Camera extends React.Component {
                         !this.state.tookPicture ? 
                         <button onClick={this.takePicture}> Sacar Foto </button> : 
                         [
-                            <button onClick={this.sendPicture}> Enviar Foto </button>,
+                            <button onClick={this.sendPicture}>Enviar Foto </button>,
                             <button onClick={this.resetCamera}> Volver a Sacar </button>
                         ]
     
