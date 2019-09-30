@@ -1,6 +1,7 @@
 .Login {
     text-align: center;
-  
+    background-image: url('../../../assets/images/login.jpg');
+    background-size: cover;
   }
   
   input {
@@ -9,12 +10,15 @@
     border-color: transparent;
     height: 20px;
     width: 50%;
+    display: block;
   }
   
   input[type="submit" i] {
     width: 25%;
     background-color: white;
-    height: 25px;
+    height: 34px;
+    font-variant-caps: all-petite-caps;
+    font-size: 16px;
   }
   
   input:focus {
@@ -32,7 +36,8 @@
     pointer-events: none;
   }
   .title {
-    margin: 10px 0px 40px 0px;
+    margin: 10px 0px 12px 0px;
+    text-shadow: 2px 2px 11px black;
   }
   
   .Login-header {
@@ -43,6 +48,16 @@
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: white;
+  }
+
+  .login-form-container {
+    width: 80%;
+    display: block;
+    position: relative;
+    background-color: rgba(0,0,0,0.2);
+    min-height: 8em;
+    padding: 1em;
+    text-align: -webkit-center;
   }
   
   .Login-link {

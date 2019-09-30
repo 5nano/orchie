@@ -80,7 +80,7 @@ class Camera extends React.Component {
         console.log(this.props);
         if (this.state.sent) {
             return (
-                <div className="PictureInstructions Camera">
+                <div className="PictureInstructions Camera Success">
                     <h1>Se guardaron las medidas correctamente</h1>
                     <button onClick={this.nextPlant}> Próxima muestra </button> : 
                 </div>
