@@ -1,0 +1,28 @@
+.Camera.Plant {
+    .loading {
+        color: white;
+        margin: auto;
+        margin-top: 60px;
+    }
+
+    button {
+        margin-top: 20px;
+    }
+    .photo {
+        width: 70%;
+        margin: auto;
+        object-fit: contain;
+        display: block;
+    }
+
+    .live-camera {
+        object-fit: contain;
+        width: 70%;
+        margin: auto;
+        display: block;
+    }
+}
+
+.Camera.Success {
+    margin-top: 40%;
+}
