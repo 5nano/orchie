@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import './Camera.scss';
 
 class Camera extends React.Component {
+    
     constructor(props) {
         super(props);
         this.state = {
             tookPicture: false,
             loading: false,
             sent: false,
-            photoInfo: null,
+            bulmapsaurPayload: null,
         }
         this.takePicture = this.takePicture.bind(this);
         this.resetCamera = this.resetCamera.bind(this);
@@ -61,18 +62,17 @@ class Camera extends React.Component {
         reader.readAsDataURL(file)
         
         reader.onload = () => {
-            let photoInfo = {
-                experimentName: this.props.currentExperiment.experimentName,
-                experimentId: this.props.currentExperiment.experimentId,
-                testId: this.props.currentExperiment.testId,
-                type: file.type,
-                size: file.size,
-                base64: reader.result,
-                file:file,
+            console.log("Cargando info con props ",this.props)
+            const idAssay = this.props.testInfo.split('-')[0];
+            const idExperiment = this.props.testInfo.split('-')[1];
+            let bulmaPayload = {
+                idAssay: idAssay,
+                idExperiment: idExperiment,
+                base64: reader.result.slice(reader.result.indexOf(",") + 1)
             };
+            console.log("Bulmapsaur payload", bulmaPayload)
+            this.setState({ bulmapsaurPayload: bulmaPayload }) 
         
-        this.setState({ photoInfo: photoInfo }) 
-        console.log(photoInfo)
         }
     }
 
@@ -84,28 +84,17 @@ class Camera extends React.Component {
                 sent: true,
             })
         }, 1400)
-        fetch('https://192.168.0.39:8443/bulmapsaur/api/images', {
+        fetch('https://35.188.202.169:8443/bulmapsaur/api/images', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
-            body: this.buildBody()
+            body: this.state.bulmapsaurPayload
             })
         .then(response => console.log(response))
         .catch(error => console.log(error))
-      }
-
-      buildBody () {
-        let base64WithExtraInfo = this.state.photoInfo.base64; 
-        return JSON.stringify({
-             name: this.state.photoInfo.name,
-             size: this.state.photoInfo.size,
-             base64: base64WithExtraInfo.slice(base64WithExtraInfo.indexOf(",")+1),
-             file: this.state.photoInfo.file,
-         })
-     }  
-
+      } 
 
     resetCamera() {
         this.setState({
@@ -138,14 +127,15 @@ class Camera extends React.Component {
             )
         }
         console.log(this.state)
+       
         return (
             
             <div className="PictureInstructions Camera Plant">
                 {
                     !this.state.tookPicture ?
                     <h1>
-                        Sacá la foto de "{this.props.currentExperiment.experimentName}"
-                        de la muestra "{this.props.currentExperiment.testId}"
+                        Sacá la foto de
+                        de la muestra 
                     </h1> :
                     <h1>Se ve bien la foto?</h1>
                 }
@@ -162,10 +152,14 @@ class Camera extends React.Component {
                 }            
         
                 {
-                    this.state.loading ? <div className="loading">'Enviando foto...'</div> :
+                    this.state.loading ? 
+
+                    <div className="loading">'Enviando foto...'</div> :
 
                         !this.state.tookPicture ? 
+
                         <button onClick={this.takePicture}> Sacar Foto </button> : 
+
                         [
                             <button onClick={this.sendPicture}>Enviar Foto </button>,
                             <button onClick={this.resetCamera}> Volver a Sacar </button>

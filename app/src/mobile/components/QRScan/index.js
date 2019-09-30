@@ -3,7 +3,7 @@ import axios from 'axios';
 import './Camera.scss';
 import QrReader from 'react-qr-reader'
 
-class Camera extends React.Component {
+class QrScan extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,9 +16,9 @@ class Camera extends React.Component {
     }
 
     handleScan(data) {
+  
         if (data) {
-            console.log(data)
-            this.props.setCurrentExperiment(1,'Fertilizante para soja',2);
+            this.props.setTestInfo(data);
             this.props.history.replace('/camera')
         }
     }
@@ -47,4 +47,4 @@ class Camera extends React.Component {
 
 }
 
-export default Camera;
+export default QrScan;

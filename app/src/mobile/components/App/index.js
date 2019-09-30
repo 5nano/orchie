@@ -10,9 +10,8 @@ import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom
 function App() {
   const [state, setState] = useState({ 
     loginInfo: null, 
-    experiment: {experimentId: null, 
-                 experimentName: '',
-                 testId: null}
+    //Test info es idAssay-idExperiment
+    testInfo: null
   });
 
   const login = (loginData) => {
@@ -22,10 +21,11 @@ function App() {
     })
   }
 
-  const setCurrentExperiment = (experimentId, experimentName, testId) => {
+  const setTestInfo = (testInfo) => {
+    console.log("Setting test info: ",testInfo)
     setState({
       ...state,
-      experiment: {experimentId,experimentName,testId}
+      testInfo: testInfo
     })
   }
   
@@ -52,13 +52,13 @@ function App() {
       <Route 
         path="/qr-scan" 
         exact 
-        render={(props) => (<QRScan {...props} setCurrentExperiment={setCurrentExperiment} />)}
+        render={(props) => (<QRScan {...props} setTestInfo={setTestInfo} />)}
       />
 
       <Route 
         path="/camera" 
         exact 
-        render={(props) => (<Camera {...props} currentExperiment = {state.experiment} />)}
+        render={(props) => (<Camera {...props} testInfo={state.testInfo} />)}
       />
 
       <Route 
