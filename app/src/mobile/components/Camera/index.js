@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Camera.scss';
 
 class Camera extends React.Component {
-    
+
     constructor(props) {
         super(props);
         this.state = {
@@ -17,10 +17,10 @@ class Camera extends React.Component {
         this.sendPicture = this.sendPicture.bind(this);
         this.nextPlant = this.nextPlant.bind(this);
     }
-    
+
 
     captureVideo() {
-       
+
         navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:"environment"}})
             .then(gotMedia.bind(this))
             .catch(error => {
@@ -58,9 +58,9 @@ class Camera extends React.Component {
 
     handleImageToBase64(file) {
         let reader = new FileReader()
-        
+
         reader.readAsDataURL(file)
-        
+
         reader.onload = () => {
             console.log("Cargando info con props ",this.props)
             const idAssay = this.props.testInfo.split('-')[0];
@@ -71,20 +71,20 @@ class Camera extends React.Component {
                 base64: reader.result.slice(reader.result.indexOf(",") + 1)
             };
             console.log("Bulmapsaur payload", bulmaPayload)
-            this.setState({ bulmapsaurPayload: bulmaPayload }) 
-        
+            this.setState({ bulmapsaurPayload: bulmaPayload })
+
         }
     }
 
     handleFileUpload(){
-     
+
         setTimeout(() => {
             this.setState({
                 loading: false,
                 sent: true,
             })
         }, 1400)
-        fetch('https://35.188.202.169:8443/bulmapsaur/api/images', {
+        fetch('http://35.188.202.169:8443/bulmapsaur/api/images', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -94,7 +94,7 @@ class Camera extends React.Component {
             })
         .then(response => console.log(response))
         .catch(error => console.log(error))
-      } 
+      }
 
     resetCamera() {
         this.setState({
@@ -110,37 +110,37 @@ class Camera extends React.Component {
             },
             this.handleFileUpload)
     }
-    
+
 
     nextPlant() {
         this.props.history.replace('/steps-use-plane')
     }
 
     render() {
-      
+
         if (this.state.sent) {
             return (
                 <div className="PictureInstructions Camera Success">
                     <h1>Se guardaron las medidas correctamente</h1>
-                    <button onClick={this.nextPlant}> Próxima muestra </button> : 
+                    <button onClick={this.nextPlant}> Próxima muestra </button> :
                 </div>
             )
         }
         console.log(this.state)
-       
+
         return (
-            
+
             <div className="PictureInstructions Camera Plant">
                 {
                     !this.state.tookPicture ?
                     <h1>
                         Sacá la foto de
-                        de la muestra 
+                        de la muestra
                     </h1> :
                     <h1>Se ve bien la foto?</h1>
                 }
-                
-        
+
+
                 {
                     !this.state.tookPicture &&
                     <video autoPlay className="live-camera"></video>
@@ -149,22 +149,22 @@ class Camera extends React.Component {
                 {
                     this.state.tookPicture &&
                     <img ref="camera" className="photo" />
-                }            
-        
+                }
+
                 {
-                    this.state.loading ? 
+                    this.state.loading ?
 
                     <div className="loading">'Enviando foto...'</div> :
 
-                        !this.state.tookPicture ? 
+                        !this.state.tookPicture ?
 
-                        <button onClick={this.takePicture}> Sacar Foto </button> : 
+                        <button onClick={this.takePicture}> Sacar Foto </button> :
 
                         [
                             <button onClick={this.sendPicture}>Enviar Foto </button>,
                             <button onClick={this.resetCamera}> Volver a Sacar </button>
                         ]
-    
+
                 }
 
 
