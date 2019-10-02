@@ -90,7 +90,7 @@ class Camera extends React.Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: this.state.bulmapsaurPayload
+            body: JSON.stringify(this.state.bulmapsaurPayload)
             })
         .then(response => console.log(response))
         .catch(error => console.log(error))
