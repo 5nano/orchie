@@ -84,7 +84,7 @@ class Camera extends React.Component {
                 sent: true,
             })
         }, 1400)
-        fetch('http://35.188.202.169:8443/bulmapsaur/api/images', {
+        fetch('https://nanivo-bush.herokuapp.com/images', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
