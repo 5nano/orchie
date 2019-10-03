@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import Button from '@material-ui/core/Button';
+
 // It will reuse all styles from PictureInstructions
 
 function PrintInstructions(props) {
@@ -16,7 +17,8 @@ function PrintInstructions(props) {
         <div className="plane" />
         <div className="plane-dot bottom"/>
 
-        <button onClick={handleClick}>Hecho, siguiente paso</button>
+
+        <Button onClick={handleClick}>Hecho, siguiente paso</Button>
     </div>
   );
 }
