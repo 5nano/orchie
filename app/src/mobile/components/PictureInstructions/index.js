@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './PictureInstructions.scss';
 import InstructionsPlant from './InstructionsPlant3.png';
-import axios from 'axios';
+import Button from '@material-ui/core/Button';
+
 
 function PictureInstructions(props) {
     const handleClick = (e) => {
@@ -19,7 +20,8 @@ function PictureInstructions(props) {
         </div>
         <div className="plane-dot bottom"/>
 
-        <button onClick={handleClick}>Entendido</button>
+        <Button onClick={handleClick}>Entendido</Button>
+
     </div>
   );
 }

@@ -1,11 +1,12 @@
 .PictureInstructions {
-    padding: 40px 10px;
+    padding: 20px 10px;
 
     h1 {
         text-align: center;
-        margin: 10px 10px;
+        margin: 2.5px 2.5px;
         font-display: 'Robotica';
         color: white;
+        font-size: 1.5em;
     }
     .plane-dot {
         width: 15px;
@@ -24,7 +25,7 @@
 
     .plane {
         display: flex;
-        height: 300px;
+        height: 250px;
         max-width: 80%;
         margin: auto;
         background-color: white;

@@ -10,16 +10,20 @@
     }
     .photo {
         width: 70%;
-        margin: auto;
-        object-fit: contain;
+        height: 70%;
         display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .live-camera {
         object-fit: contain;
-        width: 70%;
         margin: auto;
+        width: 70%;
+        height: 70%;
         display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 

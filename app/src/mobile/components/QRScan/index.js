@@ -33,14 +33,16 @@ class QrScan extends React.Component {
     
         return (
             <div className="PictureInstructions ">
-                <h1>Escanea el QR de la muestra</h1>
+                <h1>Escanea el QR asociado al experimento</h1>
                 {<QrReader
                     delay={300}
                     onError={this.handleError}
                     onScan={this.handleScan}
-                    style={{ width: '100%' }}
+                    style={{ 'width': '90%',
+                        'marginLeft': '5%',
+                        'marginRight': '5%' }}
                 />}        
-             <p>Si la muestra aún no tiene QR dirigite a la app de escritorio e imprimila</p>
+             <p> Si el experimento aún no tiene QR dirigite a la app de escritorio e imprimila</p>
             </div>
         );
     }
