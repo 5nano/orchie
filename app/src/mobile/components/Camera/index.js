@@ -86,13 +86,14 @@ class Camera extends React.Component {
 
     handleFileUpload() {
 
-        fetch('https://nanivo-bush.herokuapp.com/images, {
+        fetch('https://nanivo-bush.herokuapp.com/images', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(this.state.bulmapsaurPayload)})
+            body: JSON.stringify(this.state.bulmapsaurPayload)
+        })
         .then(response =>  this.setState({ sent: true, sendError: true , blob: null}))
         .catch(error => this.setState({ sent: false, loading: false, sendError: true }))
       }
