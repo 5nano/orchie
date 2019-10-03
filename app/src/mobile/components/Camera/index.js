@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import './Camera.scss';
+import Button from '@material-ui/core/Button';
+import { ButtonGroup } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+
 
 class Camera extends React.Component {
 
@@ -10,6 +15,8 @@ class Camera extends React.Component {
             loading: false,
             sent: false,
             bulmapsaurPayload: null,
+            sendError: false  ,
+            blob: null
         }
         this.takePicture = this.takePicture.bind(this);
         this.resetCamera = this.resetCamera.bind(this);
@@ -51,6 +58,7 @@ class Camera extends React.Component {
                 }, () => {
                     this.refs.camera.src = URL.createObjectURL(blob);
                     this.refs.camera.onload = () => { URL.revokeObjectURL(this.src); }
+                    this.state.blob = blob;
                     this.handleImageToBase64(blob);
                 })
             })
@@ -76,14 +84,8 @@ class Camera extends React.Component {
         }
     }
 
-    handleFileUpload(){
+    handleFileUpload() {
 
-        setTimeout(() => {
-            this.setState({
-                loading: false,
-                sent: true,
-            })
-        }, 1400)
         fetch('https://nanivo-bush.herokuapp.com/images', {
             method: 'POST',
             headers: {
@@ -91,9 +93,9 @@ class Camera extends React.Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(this.state.bulmapsaurPayload)
-            })
-        .then(response => console.log(response))
-        .catch(error => console.log(error))
+        })
+        .then(response =>  this.setState({ sent: true, sendError: true , blob: null}))
+        .catch(error => this.setState({ sent: false, loading: false, sendError: true }))
       }
 
     resetCamera() {
@@ -121,12 +123,33 @@ class Camera extends React.Component {
         if (this.state.sent) {
             return (
                 <div className="PictureInstructions Camera Success">
-                    <h1>Se guardaron las medidas correctamente</h1>
-                    <button onClick={this.nextPlant}> Próxima muestra </button> :
+                    <h1> La imagen ha sido enviada </h1>
+                    <Button onClick={this.nextPlant}> Próxima planta </Button> :
                 </div>
             )
         }
-        console.log(this.state)
+
+        if (this.state.sendError) {
+        
+            return (
+                <div className="PictureInstructions Camera Plant">
+                    
+                    {
+                        <h1>
+                            Ocurrió un problema mientras enviabamos la fotografía para ser analizada.
+                            Por favor intente nuevamente.
+                        </h1>
+                    }
+                    {
+                        <img src={URL.createObjectURL(this.state.blob)} className="photo" />
+                    }
+                    {
+                        <Button onClick={this.sendPicture}> Enviar fotografía </Button>
+                    }
+                    
+                </div>
+            )
+        }
 
         return (
 
@@ -134,10 +157,9 @@ class Camera extends React.Component {
                 {
                     !this.state.tookPicture ?
                     <h1>
-                        Sacá la foto de
-                        de la muestra
+                        Necesitamos que tomes una fotografía de la planta a analizar
                     </h1> :
-                    <h1>Se ve bien la foto?</h1>
+                    <h1> ¿Se ve bien la fotografía?</h1>
                 }
 
 
@@ -154,16 +176,30 @@ class Camera extends React.Component {
                 {
                     this.state.loading ?
 
-                    <div className="loading">'Enviando foto...'</div> :
+                    <div className="loading">'Enviando fotografía...'</div> :
 
                         !this.state.tookPicture ?
 
-                        <button onClick={this.takePicture}> Sacar Foto </button> :
-
-                        [
-                            <button onClick={this.sendPicture}>Enviar Foto </button>,
-                            <button onClick={this.resetCamera}> Volver a Sacar </button>
-                        ]
+                        <label htmlFor="icon-button-file">
+                          <IconButton
+                            color="primary"
+                            aria-label="upload picture"
+                            component="span"
+                            onClick={this.takePicture}
+                            style={
+                                {'backgroundColor': 'white',
+                                'margin': 'auto',
+                                'display': 'table',
+                                'marginTop': '5px'}
+                            }
+                          >
+                            <PhotoCamera />
+                          </IconButton>
+                          </label> :
+                        <ButtonGroup >
+                              <Button onClick={this.sendPicture}>Enviar fotografía</Button>
+                              <Button onClick={this.resetCamera}>Nueva fotografía</Button>
+                        </ButtonGroup>
 
                 }
 
