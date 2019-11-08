@@ -114,7 +114,7 @@ class Camera extends React.Component {
 
 
     nextPlant() {
-        this.props.history.replace('/steps-use-plane')
+        this.props.history.replace('/qr-scan')
     }
 
     render() {
