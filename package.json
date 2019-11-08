@@ -6,12 +6,12 @@
   "browserslist": "defaults",
   "scripts": {
     "dist": "NODE_ENV=production ./node_modules/webpack/bin/webpack.js --config webpack.config.js",
-    "build": "NODE_ENV=development webpack --config webpack.config.js",
     "watch": "NODE_ENV=development webpack --watch --config webpack.config.js",
     "analyze": "npm run dist --analyze",
-    "start": "npm run dist && NODE_ENV=production node index.js",
     "test": "npm run lint && jest",
     "lint": "./node_modules/.bin/eslint --ext .js app/**",
+    "start": "NODE_ENV=production node index.js",
+    "build": "NODE_ENV=production webpack",
     "start:dev": "NODE_ENV=development nodemon index.js",
     "build:dev": "NODE_ENV=development webpack --display-error-details"
   },
