@@ -1,20 +1,30 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import logo from '../../../assets/images/nanivo-logo.png';
+import BushService from '../../../services/bush';
+import PropTypes from 'prop-types';
+
+Login.propTypes = {
+  validateLogin: PropTypes.func
+}
 
 function Login(props) {
-  const [loginInfo, updateLoginInfo] = useState({ username: '', pw: '' });
+  const [loginInfo, updateLoginInfo] = useState({ username: '', password: '' });
 
   const login = (e) => {
     e.preventDefault();
-    axios.post('/api/login', loginInfo)
-      .then(() => {
-        props.login(loginInfo);
-        
-       props.history.replace('/qr-scan');
-       
-      })
-      .catch(console.log)
+
+
+    BushService.post('/login',loginInfo)
+                .then(response => {
+                  document.cookie = `user=${loginInfo.username};max-age=${60*60*24*365}`
+                  props.validateLogin();
+                  props.history.push('qr-scan')
+                })
+                .catch(error => {
+                  console.log("error")
+                  
+                })
+
   }
   
   return (
@@ -28,12 +38,12 @@ function Login(props) {
           <div className="login-wrapper">
             <input 
             placeholder="Usuario" 
-            onChange={(e => updateLoginInfo({ username: e.target.value, pw: loginInfo.pw }))}
+            onChange={(e => updateLoginInfo({ username: e.target.value, password: loginInfo.password }))}
             value={loginInfo.username} />
             <input 
             type="password"
-            placeholder="Contraseña" onChange={(e => updateLoginInfo({ pw: e.target.value, username: loginInfo.username }))}
-            value={loginInfo.pw} />
+            placeholder="Contraseña" onChange={(e => updateLoginInfo({ password: e.target.value, username: loginInfo.username }))}
+            value={loginInfo.password} />
             <button className="login-button" onClick={login}>
               Ingresar
             </button>

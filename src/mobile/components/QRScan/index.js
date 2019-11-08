@@ -30,17 +30,20 @@ class QrScan extends React.Component {
     render() {
     
         return (
-            <div className="PictureInstructions ">
-                <h1>Escanea el QR asociado al experimento</h1>
-                {<QrReader
-                    delay={300}
-                    onError={this.handleError}
-                    onScan={this.handleScan}
-                    style={{ 'width': '90%',
-                        'marginLeft': '5%',
-                        'marginRight': '5%' }}
-                />}        
-             <p> Si el experimento aún no tiene QR dirigite a la app de escritorio e imprimila</p>
+            <div className="qr-scan-container">
+                <div className="qr-scan-wrapper">
+                    <div className="qr-scan-title">
+                        Escanea el QR asociado al experimento
+                    </div>
+                    {<QrReader
+                        delay={300}
+                        onError={this.handleError}
+                        onScan={this.handleScan}
+                        style={{ 'width': '100%'}}
+                    />}    
+                    <h4>Atención!</h4>    
+                    <p>Si el experimento aún no tiene un QR asociado, dirigite a la app de escritorio para imprimirla</p>
+             </div>
             </div>
         );
     }
