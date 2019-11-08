@@ -1,7 +1,12 @@
 import * as React from 'react';
 import BushService from '../../../services/bush';
+import MenuIcon from '@material-ui/icons/Menu';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 function Header (props) {
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
     const logout = () => {
         BushService.post('/logout')
@@ -10,6 +15,18 @@ function Header (props) {
                         window.location.href = '/login';
                 })
     }
+
+    const openMenu = (e) => {
+        setAnchorEl(e.currentTarget)
+    }
+
+    const closeMenu = () => {
+        setAnchorEl(null)
+    }
+
+    const showHelp = () => {
+
+    }
     return(
         <div className="header-container">
             <div className="header-wrapper">
@@ -17,9 +34,16 @@ function Header (props) {
 
                 </div>
                 <div className="header-options">
-                    <a onClick={()=>logout()}>
-                        Cerrar Sesion
-                    </a>
+                    <MenuIcon onClick={(e)=>openMenu(e)}/>
+                    <Menu
+                        id='menu'
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={closeMenu}>
+                        <MenuItem onClick={()=>logout()}>Cerrar Sesion</MenuItem>
+                        <MenuItem onClick={()=>showHelp()}>Ayuda</MenuItem>
+                    </Menu>
                 </div>
             </div>
         </div>
