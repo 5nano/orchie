@@ -1,5 +1,3 @@
-const React = require('react');
-
 module.exports = (title, manifest) => {     
     return `
     <!DOCTYPE html>
@@ -13,7 +11,7 @@ module.exports = (title, manifest) => {
         
         ${
             Object.keys(manifest)
-                .filter(asset => manifest[asset].endsWith('.css') && asset.includes('mobile'))
+                .filter(asset => manifest[asset].endsWith('.css'))
                 .map(asset => `<link href="dist/${manifest[asset]}" rel="stylesheet">`)
                 .join(' ')
         }
@@ -22,7 +20,7 @@ module.exports = (title, manifest) => {
         <div id="app-root"></div>
         ${
             Object.keys(manifest)
-                .filter(asset => manifest[asset].endsWith('.js') && asset.includes('mobile'))
+                .filter(asset => manifest[asset].endsWith('.js'))
                 .map(asset => `<script type="text/javascript" src="dist/${manifest[asset]}"></script>`)
                 .join(' ')
         }

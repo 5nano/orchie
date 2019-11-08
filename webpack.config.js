@@ -6,6 +6,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const CopyPlugin = require('copy-webpack-plugin');
 
 const {
 	NODE_ENV,
@@ -25,15 +26,12 @@ const devMode = NODE_ENV === 'development';
 
 module.exports = {
 	mode: NODE_ENV,
-	entry: { 
-		'main.mobile': './src/mobile/index.js',
-		'main.desktop': './src/desktop/index.js'
-	},
+	entry: ['./src/mobile/index.js','./src/mobile/styles.scss'],
 	context: path.resolve(__dirname),
 
 	output: {
 		filename: devMode ? '[name].js' : '[name].[hash].js',
-		path: path.resolve(__dirname, '../dist')
+		path: path.resolve(__dirname, 'dist')
 	},
 
 	plugins: [
@@ -44,15 +42,22 @@ module.exports = {
 			filename: devMode ? '[name].css' : '[name].[hash].css',
 			chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
 		}),
+		new CopyPlugin([
+			{ 
+				from: './src/assets', 
+				to: './assets',
+				force: true,
+			},
+		  ]),
 		...(() => analyzeBundle ? [new BundleAnalyzerPlugin()] : [])(),
-		...(devMode ? 
-			[] : 
-			[
+		...(devMode ? [] : [
+			new CleanWebpackPlugin(),
 			new CompressionPlugin({
-				filename: '[path].gz[query]',
-				algorithm: 'gzip',
-				test: /\.js$|\.css$|\.html$/,
+			  deleteOriginalAssets: true,
 			}),
+			new ManifestPlugin(),
+		  ])
+		  
 			// new CompressionPlugin({ Sadly I couldnt get it to work in time
 			// 	test: /\.js(\?.*)?$/i,
 			// 	filename(info) {
@@ -65,7 +70,7 @@ module.exports = {
 			// 		return brotliCompress(input, callback);
 			// 	},
 			// }),
-		]),
+		
 	],
 
 	module: {
@@ -128,17 +133,16 @@ module.exports = {
 				]
 			},
 			{
-				test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-				loader: require.resolve('url-loader'),
-				options: {
-					limit: 10000,
-					name: 'images/[name].[hash:8].[ext]',
-					publicPath: '/dist'
-				},
-			},
+				test: /\.(png|jp(e*)g|svg)$/,  
+				use: [{
+					loader: 'url-loader',
+					options: { 
+						name: '[hash]-[name].[ext]'
+					} 
+				}]
+			}
 		]
 	},
-
 	optimization: {
 		splitChunks: {
 			cacheGroups: {
@@ -153,5 +157,13 @@ module.exports = {
 			minSize: 30000,
 			name: true
 		}
+	},
+	watch: devMode,
+	watchOptions: {
+		aggregateTimeout: 300,
+		poll: 200
+	},
+	resolve: {
+		extensions: ['.tsx', '.ts', '.js', '.scss']
 	}
 };

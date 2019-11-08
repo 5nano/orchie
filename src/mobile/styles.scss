@@ -1,16 +1,22 @@
-@import '../../variables.scss';
-
+@import './components/App/styles.scss';
+@import './components/Camera/styles.scss';
+@import './components/Login/styles.scss';
+@import './components/QRScan/styles.scss';
+html{
+    height: 100%;
+}
 body {
-    background-color: $background-color;
-    margin: 20% 0 0 0;
+  height: 100%;
+   margin: 0px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
         "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
         sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
+}
+#app-root{
+    height: 100%;
 }

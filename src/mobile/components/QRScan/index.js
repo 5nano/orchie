@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import './Camera.scss';
 import QrReader from 'react-qr-reader'
 
 class QrScan extends React.Component {

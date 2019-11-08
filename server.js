@@ -1,5 +1,4 @@
 
-const templateDesktop = require('./templateDesktop');
 const templateMobile = require('./templateMobile');
 const express = require('express');
 const config = require('./config');
@@ -11,21 +10,7 @@ const MobileDetect = require('mobile-detect');
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
-var firebase = require("firebase");
-
-// Add the Firebase products that you want to use
-require("firebase/auth");
-require("firebase/database");
-
-firebase.initializeApp({
-    apiKey: "AIzaSyBLbSF0bTZ4dA8kKEKybENZxWZuMWPfzE4",
-    authDomain: "proyecto-final-utn-frba.firebaseapp.com",
-    databaseURL: "https://proyecto-final-utn-frba.firebaseio.com",
-    projectId: "proyecto-final-utn-frba",
-    storageBucket: "",
-    messagingSenderId: "699033970836",
-    appId: "1:699033970836:web:f97c03cf9f16c463"
-})
+const path=require('path');
 
 const privateKey  = fs.readFileSync('cert/selfsigned.key', 'utf8');
 const certificate = fs.readFileSync('cert/selfsigned.crt', 'utf8');
@@ -33,7 +18,7 @@ const certificate = fs.readFileSync('cert/selfsigned.crt', 'utf8');
 const credentials = {key: privateKey, cert: certificate};
 
 const Api = require('./api');
-
+const devMode = process.env.NODE_ENV === 'development';
 const app = express();
 
 app.use(helmet());
@@ -52,9 +37,13 @@ app.use("/dist", expressStaticGzip("./dist", {
 
 app.use('/', (req, res) => {
     const title = 'Orchie'
-    const template = req.browser.mobile() ? templateMobile(title, manifest) : templateDesktop(title, manifest);
+    const template = templateMobile(title, manifest)
     res.send(template);
 });
+
+app.use(express.static(path.join(__dirname,'/src/assets')))
+
+console.log(path.join(__dirname,'/src/assets'))
 
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);

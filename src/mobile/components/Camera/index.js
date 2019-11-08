@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './Camera.scss';
 import Button from '@material-ui/core/Button';
 import { ButtonGroup } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';

@@ -5,14 +5,15 @@
   "main": "index.js",
   "browserslist": "defaults",
   "scripts": {
-    "dist": "NODE_ENV=production ./node_modules/webpack/bin/webpack.js --config app/webpack.config.js",
-    "build": "NODE_ENV=development webpack --config app/webpack.config.js",
-    "watch": "NODE_ENV=development webpack --watch --config app/webpack.config.js",
+    "dist": "NODE_ENV=production ./node_modules/webpack/bin/webpack.js --config webpack.config.js",
+    "build": "NODE_ENV=development webpack --config webpack.config.js",
+    "watch": "NODE_ENV=development webpack --watch --config webpack.config.js",
     "analyze": "npm run dist --analyze",
     "start": "npm run dist && NODE_ENV=production node index.js",
-    "start-dev": "npm run watch & NODE_ENV=development nodemon index.js",
     "test": "npm run lint && jest",
-    "lint": "./node_modules/.bin/eslint --ext .js app/**"
+    "lint": "./node_modules/.bin/eslint --ext .js app/**",
+    "start:dev": "NODE_ENV=development nodemon index.js",
+    "build:dev": "NODE_ENV=development webpack --display-error-details"
   },
   "engines": {
     "node": "8.16.0"
@@ -84,5 +85,8 @@
     "webpack-cli": "^3.3.4",
     "webpack-dev-server": "^3.7.2",
     "webpack-manifest-plugin": "^2.0.4"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^5.0.5"
   }
 }
