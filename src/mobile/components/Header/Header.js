@@ -3,7 +3,7 @@ import BushService from '../../../services/bush';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-
+import logo from '../../../assets/images/nanivo-logo.png';
 function Header (props) {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -31,7 +31,7 @@ function Header (props) {
         <div className="header-container">
             <div className="header-wrapper">
                 <div className="header-logo">
-
+                    <img src={logo}/>
                 </div>
                 <div className="header-options">
                     <MenuIcon onClick={(e)=>openMenu(e)}/>

@@ -1,13 +1,20 @@
 .header-container{
     padding:20px;
-    background-color: #6AC1A9;
+    background-color: white;
+
+    border-bottom: 1px solid #6AC1A9;
     .header-wrapper{
         display:flex;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: space-between;
+        align-items: center;
 
         .header-logo{
-
+            width: 150px;
+            img{
+                height: 100%;
+                width: 100%;
+            }
         }
 
         .header-options{
