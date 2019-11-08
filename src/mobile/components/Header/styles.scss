@@ -1,0 +1,21 @@
+.header-container{
+    padding:20px;
+    background-color: #6AC1A9;
+    .header-wrapper{
+        display:flex;
+        flex-direction: row;
+        justify-content: space-around;
+
+        .header-logo{
+
+        }
+
+        .header-options{
+            display:flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+        }
+    }
+    
+}
