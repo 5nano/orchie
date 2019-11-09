@@ -43,7 +43,6 @@ app.use('/', (req, res) => {
 
 app.use(express.static(path.join(__dirname,'/src/assets')))
 
-console.log(path.join(__dirname,'/src/assets'))
 
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
