@@ -13,14 +13,6 @@ function App() {
             setLogin({logged: true});
     };
     validateLogin();
-
-  const setTestInfo = (testInfo) => {
-    console.log("Setting test info: ",testInfo)
-    setState({
-      ...state,
-      testInfo: testInfo
-    })
-  }
   
   return (
     <Router>
