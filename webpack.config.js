@@ -140,7 +140,8 @@ module.exports = {
 						name: '[hash]-[name].[ext]'
 					} 
 				}]
-			}
+			},
+			
 		]
 	},
 	optimization: {
