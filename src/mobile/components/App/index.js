@@ -8,7 +8,8 @@ import PrivateRoute from '../Utilities/PrivateRoute/PrivateRoute';
 function App() {
 
   const [{logged: loggedIn}, setLogin] = React.useState({logged: false});
-    const validateLogin = () => {
+  
+  const validateLogin = () => {
         if (document.cookie.includes('user') && !loggedIn)
             setLogin({logged: true});
     };
@@ -20,6 +21,12 @@ function App() {
         !loggedIn && 
         <Redirect to="/login" />
       }
+
+      <Route 
+        path="/"
+        exact
+        render={(props) => <Redirect to="/login"/>}
+        />
       
       <Route 
         path="/login" 
@@ -35,7 +42,7 @@ function App() {
         />
 
       <PrivateRoute 
-        path='/camera'
+        path='/camera/:experimentId'
         exact
         component={Camera}
         isLoggedIn={loggedIn}

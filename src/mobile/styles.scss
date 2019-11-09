@@ -21,3 +21,23 @@ code {
 #app-root{
     height: 100%;
 }
+
+.layout-container{
+    padding:20px;
+    height: 100%;
+    background-color: rgba(106, 193, 169,0.2);
+    .layout-wrapper{
+        display:flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        
+        .layout-title{
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    }
+
+}

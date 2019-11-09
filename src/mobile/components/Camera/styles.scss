@@ -1,4 +1,4 @@
-.Camera.Plant {
+
     .loading {
         color: white;
         margin: auto;
@@ -8,25 +8,18 @@
     button {
         margin-top: 20px;
     }
-    .photo {
-        width: 70%;
-        height: 70%;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
+
+    .camera{
+        width: 100%;
+
+        margin-top: 20px;
+        margin-bottom: 60px; 
     }
 
-    .live-camera {
-        object-fit: contain;
-        margin: auto;
-        width: 70%;
-        height: 70%;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
+    .next-plant{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
 
-.Camera.Success {
-    margin-top: 40%;
-}
+        height: 100%;
+    }

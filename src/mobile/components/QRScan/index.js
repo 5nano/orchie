@@ -16,8 +16,7 @@ class QrScan extends React.Component {
     handleScan(data) {
   
         if (data) {
-            this.props.setTestInfo(data);
-            this.props.history.replace('/camera')
+            this.props.history.push(`/camera/${data}`)
         }
     }
 
@@ -30,9 +29,9 @@ class QrScan extends React.Component {
     render() {
     
         return (
-            <div className="qr-scan-container">
-                <div className="qr-scan-wrapper">
-                    <div className="qr-scan-title">
+            <div className="layout-container">
+                <div className="layout-wrapper">
+                    <div className="layout-title">
                         Escaneá el QR asociado al experimento
                     </div>
                     {<QrReader
