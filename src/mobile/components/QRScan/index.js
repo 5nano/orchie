@@ -33,7 +33,7 @@ class QrScan extends React.Component {
             <div className="qr-scan-container">
                 <div className="qr-scan-wrapper">
                     <div className="qr-scan-title">
-                        Escanea el QR asociado al experimento
+                        Escaneá el QR asociado al experimento
                     </div>
                     {<QrReader
                         delay={300}
