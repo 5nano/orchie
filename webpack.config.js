@@ -76,24 +76,15 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /.(js|jsx)$/,
-				include: [path.resolve(__dirname, 'src')],
-				loader: 'babel-loader',
-
-				options: {
-					plugins: ['syntax-dynamic-import'],
-
-					presets: [
-						"@babel/preset-react",
-						[
-							'@babel/preset-env',
-							{
-								modules: false
-							}
-						]
-					]
+				test: /\.m?js$/,
+				exclude: /(node_modules)/,
+				use: {
+				  loader: 'babel-loader',
+				  options: {
+					presets: ['@babel/preset-env']
+				  }
 				}
-			},
+			  },
 			{
 				test: /\.(css|scss)$/,
 				use: [
