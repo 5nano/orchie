@@ -10,6 +10,7 @@
     "analyze": "npm run dist --analyze",
     "test": "npm run lint && jest",
     "lint": "./node_modules/.bin/eslint --ext .js app/**",
+    "heroku-postbuild":"webpack -p",
     "start": "NODE_ENV=production node index.js",
     "build": "NODE_ENV=production ./node_modules/webpack/bin/webpack.js",
     "start:dev": "NODE_ENV=development nodemon index.js",
