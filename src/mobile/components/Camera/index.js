@@ -3,8 +3,11 @@ import Button from '@material-ui/core/Button';
 import { ButtonGroup } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import Loader from '../Utilities/Loader/Loader';
+import { Snackbar } from '@material-ui/core';
 
-
+import MySnackbarContentWrapper from '../Feedback/MySnackbarContentWrapper';
+import Plant from '../../../assets/images/plant.png';
 class Camera extends React.Component {
 
     constructor(props) {
@@ -15,13 +18,15 @@ class Camera extends React.Component {
             sent: false,
             bulmapsaurPayload: null,
             sendError: false  ,
-            blob: null
+            blob: null,
+            feedback:false
         }
         this.takePicture = this.takePicture.bind(this);
         this.resetCamera = this.resetCamera.bind(this);
         this.captureVideo = this.captureVideo.bind(this);
         this.sendPicture = this.sendPicture.bind(this);
         this.nextPlant = this.nextPlant.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
 
 
@@ -65,25 +70,23 @@ class Camera extends React.Component {
 
     handleImageToBase64(file) {
         let reader = new FileReader()
-
+        let testInfo = this.props.match.params.experimentId;
         reader.readAsDataURL(file)
 
         reader.onload = () => {
-            console.log("Cargando info con props ",this.props)
-            const idAssay = this.props.testInfo.split('-')[0];
-            const idExperiment = this.props.testInfo.split('-')[1];
+            const idAssay = testInfo.split('-')[0];
+            const idExperiment = testInfo.split('-')[1];
             let bulmaPayload = {
                 idAssay: idAssay,
                 idExperiment: idExperiment,
                 base64: reader.result.slice(reader.result.indexOf(",") + 1)
             };
-            console.log("Bulmapsaur payload", bulmaPayload)
             this.setState({ bulmapsaurPayload: bulmaPayload })
-
         }
     }
 
     handleFileUpload() {
+    
 
         fetch('https://nanivo-bush.herokuapp.com/images', {
             method: 'POST',
@@ -93,8 +96,8 @@ class Camera extends React.Component {
             },
             body: JSON.stringify(this.state.bulmapsaurPayload)
         })
-        .then(response =>  this.setState({ sent: true, sendError: true , blob: null}))
-        .catch(error => this.setState({ sent: false, loading: false, sendError: true }))
+        .then(response =>  this.setState({ sent: true, sendError: true , blob: null,feedback:true}))
+        .catch(error => this.setState({ sent: false, loading: false, sendError: true,feedback:true }))
       }
 
     resetCamera() {
@@ -117,13 +120,42 @@ class Camera extends React.Component {
         this.props.history.replace('/qr-scan')
     }
 
+    handleClose(){
+        this.setState({feedback:false})
+    }
+
     render() {
 
         if (this.state.sent) {
             return (
-                <div className="PictureInstructions Camera Success">
-                    <h1> La imagen ha sido enviada </h1>
-                    <Button onClick={this.nextPlant}> Próxima planta </Button> :
+                <div className="layout-container">
+                    <div className="layout-wrapper">
+
+                        <div className="next-plant">
+                            <Button variant="outlined" 
+                                    onClick={this.nextPlant}> 
+                                Próxima planta 
+                            </Button>
+
+                            <img src={Plant}/>
+                        </div>
+                    
+                        <Snackbar 
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left'
+                            }}
+                            open={this.state.feedback}
+                            autoHideDuration={6000}
+                            onClose={this.handleClose}
+                            >
+                                <MySnackbarContentWrapper
+                                onClose={this.handleClose}
+                                variant="success"
+                                message="La imagen ha sido enviada exitosamente!"
+                                />
+                        </Snackbar>
+                    </div>
                 </div>
             )
         }
@@ -131,53 +163,67 @@ class Camera extends React.Component {
         if (this.state.sendError) {
         
             return (
-                <div className="PictureInstructions Camera Plant">
-                    
-                    {
-                        <h1>
-                            Ocurrió un problema mientras enviabamos la fotografía para ser analizada.
-                            Por favor intente nuevamente.
-                        </h1>
-                    }
+                <div className="layout-container">
+                    <div className="layout-wrapper">
+                   
                     {
                         <img src={URL.createObjectURL(this.state.blob)} className="photo" />
                     }
                     {
                         <Button onClick={this.sendPicture}> Enviar fotografía </Button>
                     }
+
+                        <Snackbar 
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left'
+                            }}
+                            open={this.state.feedback}
+                            autoHideDuration={6000}
+                            onClose={this.handleClose}
+                            >
+                                <MySnackbarContentWrapper
+                                onClose={this.handleClose}
+                                variant="error"
+                                message="Perdón, ocurrió un problema al subir la imagen. Por favor, intente nuevamente"
+                                />
+                        </Snackbar>
                     
+                    </div>
                 </div>
             )
         }
 
         return (
 
-            <div className="PictureInstructions Camera Plant">
-                {
-                    !this.state.tookPicture ?
-                    <h1>
-                        Necesitamos que tomes una fotografía de la planta a analizar
-                    </h1> :
-                    <h1> ¿Se ve bien la fotografía?</h1>
-                }
+            <div className="layout-container">
+                <div className="layout-wrapper">
 
+                <div className="layout-title">
+                    {
+                        !this.state.tookPicture ?
+                        'Toma la foto de la planta'
+                        :
+                        '¿Se ve bien la fotografía?'
+                    }
+                </div>
 
                 {
                     !this.state.tookPicture &&
-                    <video autoPlay className="live-camera"></video>
+                    <video autoPlay className="camera"></video>
                 }
 
                 {
                     this.state.tookPicture &&
-                    <img ref="camera" className="photo" />
+                    <img ref="camera" className="camera" />
                 }
 
                 {
                     this.state.loading ?
 
-                    <div className="loading">'Enviando fotografía...'</div> :
-
-                        !this.state.tookPicture ?
+                    <div className="loading"><Loader/></div> 
+                    :
+                    !this.state.tookPicture ?
 
                         <label htmlFor="icon-button-file">
                           <IconButton
@@ -185,6 +231,7 @@ class Camera extends React.Component {
                             aria-label="upload picture"
                             component="span"
                             onClick={this.takePicture}
+                            size="medium"
                             style={
                                 {'backgroundColor': 'white',
                                 'margin': 'auto',
@@ -194,15 +241,16 @@ class Camera extends React.Component {
                           >
                             <PhotoCamera />
                           </IconButton>
-                          </label> :
-                        <ButtonGroup >
+                          </label> 
+                          :
+                        <ButtonGroup size="large">
                               <Button onClick={this.sendPicture}>Enviar fotografía</Button>
                               <Button onClick={this.resetCamera}>Nueva fotografía</Button>
                         </ButtonGroup>
 
                 }
 
-
+                </div>
             </div>
         );
     }
