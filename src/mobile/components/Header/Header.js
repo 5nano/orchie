@@ -4,9 +4,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import logo from '../../../assets/images/nanivo-logo.png';
+import help from '../../../assets/images/help.jpg';
+import { Drawer } from '@material-ui/core';
 function Header (props) {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const [helper,setHelper] = React.useState(false);
 
     const logout = () => {
         BushService.post('/logout')
@@ -24,11 +28,15 @@ function Header (props) {
         setAnchorEl(null)
     }
 
-    const showHelp = () => {
+    const showHelper = () => {
+        setHelper(true)
+    }
 
+    const closeHelper = () => {
+        setHelper(false)
     }
     return(
-        <div className="header-container">
+        <div id="header-container" className="header-container">
             <div className="header-wrapper">
                 <div className="header-logo">
                     <img src={logo}/>
@@ -42,10 +50,13 @@ function Header (props) {
                         open={Boolean(anchorEl)}
                         onClose={closeMenu}>
                         <MenuItem onClick={()=>logout()}>Cerrar Sesion</MenuItem>
-                        <MenuItem onClick={()=>showHelp()}>Ayuda</MenuItem>
+                        <MenuItem onClick={()=>showHelper()}>Ayuda</MenuItem>
                     </Menu>
                 </div>
             </div>
+            <Drawer anchor="top" open={helper} onClose={()=>closeHelper}>
+                    <img onClick={()=>closeHelper()} src={help}/>
+            </Drawer>
         </div>
     )
 }
