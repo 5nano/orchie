@@ -221,7 +221,7 @@ class Camera extends React.Component {
                 {
                     this.state.loading ?
 
-                    <div className="loading"><Loader/></div> 
+                    <Loader/>
                     :
                     !this.state.tookPicture ?
 
