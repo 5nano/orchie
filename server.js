@@ -36,7 +36,7 @@ app.use("/dist", expressStaticGzip("./dist", {
 }));
 
 app.use('/', (req, res) => {
-    const title = 'Orchie'
+    const title = 'M-NANIVO'
     const template = templateMobile(title, manifest)
     res.send(template);
 });
