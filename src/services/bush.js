@@ -13,8 +13,10 @@ class BushService {
          ...bodyToSend
       })
        .then(response => {
+         debugger;
           if(!response.ok || (response.status > 300 || response.status < 200)) throw response
-          return response.json() 
+           return response.json().catch((a)=>{a})
+           
         })
        .catch(err => {
          if (err.status === 401) {

@@ -6,6 +6,8 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import Loader from '../Utilities/Loader/Loader';
 import { Snackbar } from '@material-ui/core';
 
+import BushService from '../../../services/bush';
+
 import MySnackbarContentWrapper from '../Feedback/MySnackbarContentWrapper';
 import Plant from '../../../assets/images/plant.png';
 class Camera extends React.Component {
@@ -86,18 +88,10 @@ class Camera extends React.Component {
     }
 
     handleFileUpload() {
-    
-
-        fetch('https://nanivo-bush.herokuapp.com/images', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(this.state.bulmapsaurPayload)
-        })
-        .then(response =>  this.setState({ sent: true, sendError: true , blob: null,feedback:true}))
-        .catch(error => this.setState({ sent: false, loading: false, sendError: true,feedback:true }))
+        
+        BushService.post('/images',this.state.bulmapsaurPayload)
+                    .then(() =>  this.setState({ sent: true, sendError: true , blob: null,feedback:true}))
+                     .catch(error => this.setState({ sent: false, loading: false, sendError: true,feedback:true }))
       }
 
     resetCamera() {
