@@ -106,6 +106,7 @@ class Camera extends React.Component {
         this.setState({
             loading: true,
             },
+            
             this.handleFileUpload)
     }
 

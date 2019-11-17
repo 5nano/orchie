@@ -4,7 +4,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import logo from '../../../assets/images/nanivo-logo.png';
-import help from '../../../assets/images/help.jpg';
+import help from '../../../assets/images/help.png';
 import { Drawer } from '@material-ui/core';
 function Header (props) {
 
