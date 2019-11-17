@@ -32,7 +32,7 @@ class QrScan extends React.Component {
             <div className="layout-container">
                 <div className="layout-wrapper">
                     <div className="layout-title">
-                        Escaneá el QR asociado al experimento
+                        Escaneá el QR de la planta
                     </div>
                     {<QrReader
                         delay={300}
@@ -40,8 +40,8 @@ class QrScan extends React.Component {
                         onScan={this.handleScan}
                         style={{ 'width': '100%'}}
                     />}    
-                    <h4>Atención!</h4>    
-                    <p>Si el experimento aún no tiene un QR asociado, dirigite a la app de escritorio para imprimirla</p>
+                    <h3>Atención!</h3>    
+                    <p>Si la planta no tiene un QR, imprimilo desde la <a href="http://nanivo.herokuapp.com">aplicación de escritorio</a></p>
              </div>
             </div>
         );

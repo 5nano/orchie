@@ -106,6 +106,7 @@ class Camera extends React.Component {
         this.setState({
             loading: true,
             },
+
             this.handleFileUpload)
     }
 
@@ -192,35 +193,27 @@ class Camera extends React.Component {
 
             <div className="layout-container">
                 <div className="layout-wrapper">
-
-                <div className="layout-title">
-                    {
-                        !this.state.tookPicture ?
-                        'Toma la foto de la planta'
-                        :
-                        '¿Se ve bien la fotografía?'
-                    }
-                </div>
-
-                {
-                    !this.state.tookPicture &&
-                    <video autoPlay className="camera"></video>
-                }
-
-                {
-                    this.state.tookPicture &&
-                    <img ref="camera" className="camera" />
-                }
-
-                {
-                    this.state.loading ?
-
+                    {this.state.loading ?
                     <Loader/>
                     :
+                    [
+                    <div className="layout-title">
+                        {
+                            !this.state.tookPicture ?
+                            'Toma la foto de la planta'
+                            :
+                            '¿Se ve bien la fotografía?'
+                        }
+                    </div>
+                    ,
+                    !this.state.tookPicture?
+                        <video autoPlay className="camera"></video>
+                        :
+                        <img ref="camera" className="camera" />
+                    ,
                     !this.state.tookPicture ?
-
                         <label htmlFor="icon-button-file">
-                          <IconButton
+                            <IconButton
                             color="primary"
                             aria-label="upload picture"
                             component="span"
@@ -232,18 +225,17 @@ class Camera extends React.Component {
                                 'display': 'table',
                                 'marginTop': '5px'}
                             }
-                          >
+                            >
                             <PhotoCamera />
-                          </IconButton>
-                          </label> 
-                          :
+                            </IconButton>
+                            </label> 
+                            :
                         <ButtonGroup size="large">
-                              <Button onClick={this.sendPicture}>Enviar fotografía</Button>
-                              <Button onClick={this.resetCamera}>Nueva fotografía</Button>
+                                <Button onClick={this.sendPicture}>Enviar fotografía</Button>
+                                <Button onClick={this.resetCamera}>Nueva fotografía</Button>
                         </ButtonGroup>
-
-                }
-
+                        ]
+                    }
                 </div>
             </div>
         );
