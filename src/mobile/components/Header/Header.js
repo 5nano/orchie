@@ -54,8 +54,8 @@ function Header (props) {
                     </Menu>
                 </div>
             </div>
-            <Drawer anchor="top" open={helper} onClose={()=>closeHelper}>
-                    <img onClick={()=>closeHelper()} src={help}/>
+            <Drawer  anchor="top" open={helper} onClose={()=>closeHelper}>
+                    <img style={{width:'100%'}} onClick={()=>closeHelper()} src={help}/>
             </Drawer>
         </div>
     )
