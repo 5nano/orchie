@@ -91,7 +91,10 @@ class Camera extends React.Component {
         
         BushService.post('/images',this.state.bulmapsaurPayload)
                     .then(() =>  this.setState({ sent: true, sendError: true , blob: null,feedback:true}))
-                     .catch(error => this.setState({ sent: false, loading: false, sendError: true,feedback:true }))
+                     .catch(error => {
+                         this.setState({ sent: false, loading: false, sendError: true,feedback:true})
+                        this.resetCamera()
+                        })
       }
 
     resetCamera() {
@@ -155,39 +158,8 @@ class Camera extends React.Component {
             )
         }
 
-        if (this.state.sendError) {
         
-            return (
-                <div className="layout-container">
-                    <div className="layout-wrapper">
-                   
-                    {
-                        <img src={URL.createObjectURL(this.state.blob)} className="photo" />
-                    }
-                    {
-                        <Button onClick={this.sendPicture}> Enviar fotografía </Button>
-                    }
-
-                        <Snackbar 
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left'
-                            }}
-                            open={this.state.feedback}
-                            autoHideDuration={6000}
-                            onClose={this.handleClose}
-                            >
-                                <MySnackbarContentWrapper
-                                onClose={this.handleClose}
-                                variant="error"
-                                message="Perdón, ocurrió un problema al subir la imagen. Por favor, intente nuevamente"
-                                />
-                        </Snackbar>
-                    
-                    </div>
-                </div>
-            )
-        }
+        
 
         return (
 
@@ -237,6 +209,24 @@ class Camera extends React.Component {
                         ]
                     }
                 </div>
+
+                {this.state.sendError && (
+                        <Snackbar 
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left'
+                            }}
+                            open={this.state.feedback}
+                            autoHideDuration={6000}
+                            onClose={this.handleClose}
+                            >
+                                <MySnackbarContentWrapper
+                                onClose={this.handleClose}
+                                variant="error"
+                                message="Perdón, ocurrió un problema al subir la imagen. Por favor, intente nuevamente"
+                                />
+                        </Snackbar>
+                )}
             </div>
         );
     }
